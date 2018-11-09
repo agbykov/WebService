@@ -1,5 +1,6 @@
 from app import app
 import os
+import psutil
 from functools import wraps
 from flask import Flask, request, Response
 from flask import render_template
@@ -26,12 +27,16 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
-ospid = str(os.getpid())
-cpuUsage ='CPU'
-memoryUsage = 'Memory'
+#ospid = os.getpid()
+ospid = psutil.Process()
+cpuTimes = ospid.cpu_times()
+memoryUsage = ospid.memory_full_info()
+#memoryUsage = psutil.virtual_memory()
+#cpuUsage ='CPU'
+#memoryUsage = 'Memory'
 
 @app.route('/')
 @app.route('/index')
 @requires_auth  #requires_auth decorator for basic auth
 def index():
-    return render_template('index.html', ospid=ospid, cpuUsage=cpuUsage, memoryUsage=memoryUsage)
+    return render_template('index.html', ospid=ospid, cpuTimes=cpuTimes, memoryUsage=memoryUsage)
