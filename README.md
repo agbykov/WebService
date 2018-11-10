@@ -6,7 +6,7 @@ username: **admin**
 
 password: **secret**
 
-To enable Authentication again after success login clear the browser cache.
+**Note:** To enable Authentication again after success login clear the browser cache.
 
 ## Commands for deployment Flask application
 
